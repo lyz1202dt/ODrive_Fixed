@@ -334,6 +334,17 @@ struct NullStream {
     template<typename T> NullStream& operator<<(T val) { return *this; }
 };
 
+// Forward declaration
+namespace fibre {
+template<typename T> class HexArrayPrinter;
+}
+
+// Specialization for HexArrayPrinter to resolve ambiguity
+template<typename T>
+NullStream& operator<<(NullStream& stream, const fibre::HexArrayPrinter<T>& printer) {
+    return stream;
+}
+
 #define FIBRE_LOG(level) NullStream()
 
 #endif // FIBRE_MAX_LOG_VERBOSITY
